@@ -1,7 +1,7 @@
-.forms-view-wrapper {
+.wrapper {
     position: relative;
     width: 420px;
-    height: fit-content;
+    height: 450px;
     background: transparent;
     border: 2px solid rgba(255, 255, 255, 1);
     backdrop-filter: blur(30px);
@@ -13,14 +13,43 @@
     overflow: hidden;
 }
 
-.forms-view-wrapper .forms-wrapper .form-box {
-    padding: 40px;
-    min-width: 420px;
-    box-sizing: border-box;
+.wrapper.active {
+    height: 600px;
 }
 
-.forms-view-wrapper .forms-wrapper.activeRegister .form-box {
-    height: 600px;
+.wrapper .form-box {
+    width: 100%;
+    padding: 40px;
+}
+
+.wrapper.active .form-box.login {
+    transition: none;
+    translate: -400px;  
+}
+
+.wrapper .form-box.login {
+    transition: translate .18s ease;
+    translate: 0;  
+}
+
+.wrapper.active .form-box.register {
+    transition: translate .18s ease;
+    translate: 0;  
+}
+
+.wrapper .form-box.register {
+    position:absolute;
+    translate: 400px;
+}
+
+.wrapper.active .form-box.forgotPassword {
+    transition: translate .18s ease;
+    translate: 800;
+}
+
+.wrapper .form-box.forgotPassword {
+    position: absolute;
+    translate: 400px;
 }
 
 form h1 {
@@ -111,37 +140,5 @@ form .register-link {
 }
 
 .register-link p a:hover {
-    text-decoration: underline;
-}
-
-form .login-link {
-    font-size: 14.5px;
-    text-align: center;
-    margin: 20px 0 15px;
-}
-
-.login-link p a {
-    color: #ececec;
-    text-decoration: none;
-    font-weight: 1000;
-}
-
-.login-link p a:hover {
-    text-decoration: underline;
-}
-
-form .login-link {
-    font-size: 14.5px;
-    text-align: center;
-    margin: 20px 0 15px;
-}
-
-.login-link p a {
-    color: #ececec;
-    text-decoration: none;
-    font-weight: 1000;
-}
-
-.forgot-password-link p a:hover {
     text-decoration: underline;
 }
