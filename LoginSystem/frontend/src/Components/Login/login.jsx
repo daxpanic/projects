@@ -11,6 +11,8 @@ function Login() {
         e.preventDefault();
 
         try {
+            console.log(email);
+            console.log(password);
             const response = await axios.post('http://localhost:3001/login', {
                 email,
                 password
@@ -26,21 +28,23 @@ function Login() {
             <form className='form-box login' onSubmit={handleLogin}>
                 <h2>Login</h2>
                 <div className='login-input'>
-                    <input 
-                        type="email" 
-                        placeholder="Email" 
+                    <input
+                        type="email"
+                        placeholder="Email"
                         required
                         value={email}
-                        onChange={e => setEmail(e.target.value)} 
+                        onChange={e => setEmail(e.target.value)}
                     />
-                    <input 
-                        type="password" 
-                        placeholder="Password" 
+                    <input
+                        type="password"
+                        placeholder="Password"
                         required
                         value={password}
-                        onChange={e => setPassword(e.target.value)} 
+                        onChange={e => setPassword(e.target.value)}
                     />
                 </div>
+                <h1> { email }</h1>
+                <h1> { password }</h1>
                 <label><input type="checkbox" />Remember me</label>
                 <button type="submit">Login</button>
                 <div className="register-link">
