@@ -3,21 +3,38 @@ import { Link } from 'react-router-dom';
 import './login.css';
 import axios from 'axios';
 
+const AUTH_BASE_URL = 'http://127.0.0.1:8000/api/v1';
+
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [message, setMessage] = useState('');
+    const [isError, setIsError] = useState(false);
 
     const handleLogin = async (e) => {
         e.preventDefault();
+        setMessage('');
 
         try {
-            const response = await axios.post('http://localhost:3001/login', {
+            const response = await axios.post(`${AUTH_BASE_URL}/login`, {
                 email,
-                password
+                password,
             });
-            console.log(response.data);
+
+            const token = response.data?.access_token;
+            if (token) {
+                localStorage.setItem('authToken', token);
+            }
+
+            setIsError(false);
+            setMessage('Login successful');
         } catch (error) {
-            console.error('Error during login:', error);
+            setIsError(true);
+            setMessage(
+                error.response?.data?.detail ||
+                error.response?.data?.message ||
+                'Login failed'
+            );
         }
     };
 
@@ -25,20 +42,25 @@ function Login() {
         <div className='login-wrapper'>
             <form className='form-box login' onSubmit={handleLogin}>
                 <h2>Login</h2>
+                {message && (
+                    <p className={`form-message ${isError ? 'error' : 'success'}`}>
+                        {message}
+                    </p>
+                )}
                 <div className='login-input'>
-                    <input 
-                        type="email" 
-                        placeholder="Email" 
+                    <input
+                        type="email"
+                        placeholder="Email"
                         required
                         value={email}
-                        onChange={e => setEmail(e.target.value)} 
+                        onChange={e => setEmail(e.target.value)}
                     />
-                    <input 
-                        type="password" 
-                        placeholder="Password" 
+                    <input
+                        type="password"
+                        placeholder="Password"
                         required
                         value={password}
-                        onChange={e => setPassword(e.target.value)} 
+                        onChange={e => setPassword(e.target.value)}
                     />
                 </div>
                 <label><input type="checkbox" />Remember me</label>
