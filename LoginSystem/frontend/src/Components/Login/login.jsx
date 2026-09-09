@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './login.css';
 import axios from 'axios';
-
-const AUTH_BASE_URL = 'http://127.0.0.1:8000/api/v1';
+import { AUTH_BASE_URL } from '../../config';
+import { setSession } from '../../auth';
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
     const [isError, setIsError] = useState(false);
+    const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -23,11 +24,13 @@ function Login() {
 
             const token = response.data?.access_token;
             if (token) {
-                localStorage.setItem('authToken', token);
+                setSession(token, email);
             }
 
             setIsError(false);
             setMessage('Login successful');
+
+            navigate('/dashboard');
         } catch (error) {
             setIsError(true);
             setMessage(

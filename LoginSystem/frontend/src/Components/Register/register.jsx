@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './register.css';
-
-const AUTH_BASE_URL = 'http://127.0.0.1:8000/api/v1';
+import { AUTH_BASE_URL } from '../../config';
 
 const RegisterPage = () => {
-    const [username, setUsername] = useState('');
+    const [displayed_name, setDisplayedName] = useState('');
+    const [full_name, setFullName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -28,8 +28,8 @@ const RegisterPage = () => {
             await axios.post(`${AUTH_BASE_URL}/register`, {
                 email,
                 password,
-                full_name: username,
-                displayed_name: username,
+                full_name: full_name,
+                displayed_name: displayed_name,
             });
 
             setIsError(false);
@@ -60,10 +60,17 @@ const RegisterPage = () => {
                     )}
                     <input
                         type="text"
-                        placeholder="Username"
+                        placeholder="Full name"
                         required
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        value={full_name}
+                        onChange={(e) => setFullName(e.target.value)}
+                    />
+                    <input
+                        type="text"
+                        placeholder="Displayed name"
+                        required
+                        value={displayed_name}
+                        onChange={(e) => setDisplayedName(e.target.value)}
                     />
                     <input
                         type="email"
